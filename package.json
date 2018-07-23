@@ -15,7 +15,10 @@
     "test": "jest",
     "test.watch": "jest --watch"
   },
-  "dependencies": {},
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "jquery": "^3.3.1"
+  },
   "devDependencies": {
     "@stencil/core": "^0.10.0",
     "@types/jest": "^21.1.1",

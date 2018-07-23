@@ -8,5 +8,7 @@ exports.config = {
       type: 'www',
       serviceWorker: false
     }
-  ]
+  ],
+  globalStyle: 'src/css/main.css',
+  globalScript: 'src/config.js'
 };

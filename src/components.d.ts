@@ -29,6 +29,39 @@ declare global {
 declare global {
 
   namespace StencilComponents {
+    interface IwMultipleValues {
+
+    }
+  }
+
+  interface HTMLIwMultipleValuesElement extends StencilComponents.IwMultipleValues, HTMLStencilElement {}
+
+  var HTMLIwMultipleValuesElement: {
+    prototype: HTMLIwMultipleValuesElement;
+    new (): HTMLIwMultipleValuesElement;
+  };
+  interface HTMLElementTagNameMap {
+    'iw-multiple-values': HTMLIwMultipleValuesElement;
+  }
+  interface ElementTagNameMap {
+    'iw-multiple-values': HTMLIwMultipleValuesElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      'iw-multiple-values': JSXElements.IwMultipleValuesAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IwMultipleValuesAttributes extends HTMLAttributes {
+
+    }
+  }
+}
+
+
+declare global {
+
+  namespace StencilComponents {
     interface MyComponent {
       'first': string;
       'last': string;
