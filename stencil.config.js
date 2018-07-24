@@ -9,6 +9,5 @@ exports.config = {
       serviceWorker: false
     }
   ],
-  globalStyle: 'src/css/main.css',
-  globalScript: 'src/config.js'
+  globalStyle: 'src/css/main.css'
 };

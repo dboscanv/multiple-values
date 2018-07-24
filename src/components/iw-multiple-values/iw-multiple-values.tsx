@@ -1,4 +1,4 @@
-import { Component, Element } from '@stencil/core';
+import { Component, Element, State } from '@stencil/core';
 import { Item } from './Item';
 
 // La metadata le agrega propiades/metodos a la clase
@@ -15,46 +15,82 @@ import { Item } from './Item';
 export class IwMultipleValues {
 
   @Element() element: HTMLStencilElement;
-  
+  @State() data: object[];
+  @State() name: string = "DIEGO";
+
+
   // Array of inputs
   model: Item[] = [];
+  modelObj: object;
 
   componentWillLoad() {
     // Primero si es text
     let inputs = this.element.querySelectorAll("input");
     if (inputs.length) {
       Array.from(inputs).forEach(input => {
-        this.model.push(new Item(input.name, input.name, input.placeholder, input.type));
+        this.model.push(new Item(input.name, input.value, input.placeholder, input.type));
         this.element.removeChild(input);
       });
+      this.data = [this.makeObject()];
     } else {
       console.warn('Inputs elements arent found');
     }
   }
 
+  makeObject() {
+    let obj = {};
+    for(let item of this.model) {
+      obj[item.name] = item.value;
+    }
+    this.modelObj = obj;
+    return obj;
+  }
+
+  addItem() {
+    console.log("eNTRA");
+    this.data.push(this.modelObj);
+    this.name = "Otro nombre";
+  }
+
+  handleChangeName(event: UIEvent) {
+    this.name = event.target.value;
+  } 
+
   render() {
-    console.log(this.model);
-    let pl = {'padding-left': '0px'};
+    console.log(this.data);
+    let pl = { 'padding-left': '0px' };
     return (
       <div class="container">
-        <div class="form-group">
-          <label class="control-label col-sm-2">Related Parties </label>{/*  <!-- for inputname --> */}
-          {this.model.map((i) =>
-            <div class="col-xs-10" style={pl}> 
+      <input type="text" onKeyUp={ this.handleChangeName.bind(this) } />
+      <h1>{this.name}</h1>
+        <form class="form-horizontal col-xs-11">
+          <div class="form-group">
+            <label class="control-label col-sm-2">Related Parties </label>{/*  <!-- for inputname --> */}
+            <div class="col-xs-10" style={pl}>
+            {/* Repeat the fieldset */}
+            {this.data.map(_ => 
               <fieldset class="mb10">
                 <div class="form-horizontal">
-                  <div class="inputinline col-xs-2">
-                    <input class="form-control input-sm" type="text" value={i.name} placeholder={i.placeholder} />
-                  </div>
+                  {/* Inputs */}
+                  {this.model.map((i) =>
+                    <div>
+                      <div class="inputinline col-xs-2">
+                        <input class="form-control input-sm" name={i.name} value={i.value} type={i.type} placeholder={i.placeholder} />
+                      </div>
+                    </div>
+                  )}
+                  {/* Buttons */}
                   <div class="inputinline inputinlinebtn col-xs-2">
-                    <button type="button" ng-if="$last" class="btn btn-xs btn-primary btn-circle"><i class="fa fa-plus"></i></button>
+                    <button type="button" ng-if="$last" class="btn btn-xs btn-primary btn-circle" onClick={this.addItem.bind(this)}><i class="fa fa-plus"></i></button>
                     <button type="button" class="btn btn-xs btn-primary btn-circle"><i class="fa fa-minus"></i></button>
                   </div>
                 </div>
               </fieldset>
+              )}
+              {/* Fin repeat fieldset */}
             </div>
-          )}
-        </div>
+          </div>
+        </form>
       </div>
     );
   }
