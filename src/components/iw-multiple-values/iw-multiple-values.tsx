@@ -16,7 +16,7 @@ export class IwMultipleValues {
 
   @Element() element: HTMLElement;
   @State() data: any[];
-  @State() test: any[] = [{a:1},{a:2},{a:3},{a:4},{a:5}];
+  @State() test: any[] = [{a:1,b:2},{a:2,b:4},{a:3,b:6},{a:4,b:8},{a:5,b:10}];
 
   // Array of inputs
   model: Item[] = [];
@@ -31,7 +31,6 @@ export class IwMultipleValues {
         this.element.removeChild(input);
       });
       this.data = [this.makeObject()];
-      console.log(this.data);
     } else {
       console.warn('Inputs elements arent found');
     }
@@ -42,38 +41,40 @@ export class IwMultipleValues {
     for (let item of this.model) {
       obj[item.name] = item.value;
     }
-    this.modelObj = obj;
+    this.modelObj = {...obj}; 
     return obj;
   }
 
   addItem() {
-    this.data = [...this.data, this.modelObj];
+    this.data = [...this.data, {...this.modelObj}];
   }
 
   changeValue(event, index, property) {
     let value = event.target.value;
+    // this.data[index][property] = value; // Aca no hay reactividad
     this.data = this.data.map((i, idx) => {
       if(idx == index) {
-        i = {...i, [property]: value};
+        i[property] = value;
       }
       return i;
-    });
-    
+    });    
   }
 
   changeFirstOnly() {
-    // TODO: Ver como hacer para sea reactivo?
+    // // TODO: Ver como hacer para sea reactivo?
     this.data = this.data.map((i,idx) => {
-      console.log('ANTES', i);
       if (idx == 0) {
-        i = {...i, first_name: "DIEGO!"};
+        i.first_name = "DIEGO";
       }
-      console.log('DESPUES', i);
       return i;
     });
-    console.log(this.data);
-    this.test[0] = {a:99};
-    console.log(this.test);
+    // this.test = this.test.map((i, idx) => {
+    //   if(idx == 0) {
+    //     i["a"] = 99;
+    //   }
+    //   return i;
+    // });
+    // console.log(this.test);
   }
 
   render() {
