@@ -50,16 +50,27 @@ export class IwMultipleValues {
     this.data = [...this.data, this.modelObj];
   }
 
-  changeValue(event, element, property) {
+  changeValue(event, index, property) {
     let value = event.target.value;
-    let el = this.data[element];
-    let new_value = {[property]: value};
+    this.data = this.data.map((i, idx) => {
+      if(idx == index) {
+        i = {...i, [property]: value};
+      }
+      return i;
+    });
     
   }
 
   changeFirstOnly() {
     // TODO: Ver como hacer para sea reactivo?
-    this.data[0] = {...this.data[0], first_name: "DIEGO!"}
+    this.data = this.data.map((i,idx) => {
+      console.log('ANTES', i);
+      if (idx == 0) {
+        i = {...i, first_name: "DIEGO!"};
+      }
+      console.log('DESPUES', i);
+      return i;
+    });
     console.log(this.data);
     this.test[0] = {a:99};
     console.log(this.test);
