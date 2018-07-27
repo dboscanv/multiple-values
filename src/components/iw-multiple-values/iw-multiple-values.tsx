@@ -2,29 +2,20 @@ import { Component, Element, State, Prop, Event, EventEmitter, Watch } from '@st
 import { Item } from './Item';
 import { compareArrays } from '../../utils/helpers';
 
-// La metadata le agrega propiades/metodos a la clase
-/*
-  TODO:
-    * Como funcionan los metadatos?
-    * Pasar los estilos
-    * Terminar de programar :)
-    * Emitir evento de agarrar el valor!
-    * Cuando venga valor agregar el valor!
-*/
 @Component({
   tag: 'iw-multiple-values',
 })
 export class IwMultipleValues {
 
-  @Element() element: HTMLElement;
-  @Prop() label: string;
-  @State() data: any[] = [];
-  @Prop({ mutable: true }) value: any = [];
-  @Event() valuechange: EventEmitter;
-
-  // Array of inputs
   model: Item[] = [];
   modelObj: object;
+
+  @Element() element: HTMLElement;
+
+  @State() data: any[] = [];
+
+  @Prop() label: string;
+  @Prop({ mutable: true }) value: any = [];
 
   @Watch('value')
   valueDidChangeHandler(newValue: string) {
@@ -33,13 +24,15 @@ export class IwMultipleValues {
     }
   }
 
+  @Event() valuechange: EventEmitter;
+
   componentWillLoad() {
     let inputs = this.element.querySelectorAll("input, select");
-
     if (inputs.length) {
       Array.from(inputs).forEach(input => {
+        console.log(input.querySelectorAll('option'));
         let node = input as HTMLInputElement;
-        this.model.push(new Item(node.name, node.value, node.placeholder, node.type));
+        this.model.push(new Item(node.name, node.value, node.placeholder, node.type, Array.from(input.querySelectorAll('option'))));
         this.element.removeChild(input);
       });
 
@@ -130,7 +123,13 @@ export class IwMultipleValues {
                     {this.model.map((i) =>
                       <div>
                         <div class="inputinline col-xs-2">
-                          <input class="form-control input-sm" name={i.name} value={e[i.name]} type={i.type} placeholder={i.placeholder} onInput={(ev) => this.changeValue(ev, idx, i.name)} />
+                          {i.type == "select-one"
+                            ? <select class="form-control input-sm" name="i.name" onInput={(ev) => this.changeValue(ev, idx, i.name)} >
+                              {i.options.map(o =>
+                                <option value={o.value}>{o.text}</option>
+                              )}
+                            </select>
+                            : <input class="form-control input-sm" name={i.name} value={e[i.name]} type={i.type} placeholder={i.placeholder} onInput={(ev) => this.changeValue(ev, idx, i.name)} />}
                         </div>
                       </div>
                     )}
