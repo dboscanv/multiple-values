@@ -30,7 +30,8 @@ declare global {
 
   namespace StencilComponents {
     interface IwMultipleValues {
-
+      'label': string;
+      'value': any;
     }
   }
 
@@ -53,7 +54,9 @@ declare global {
   }
   namespace JSXElements {
     export interface IwMultipleValuesAttributes extends HTMLAttributes {
-
+      'label'?: string;
+      'onValuechange'?: (event: CustomEvent) => void;
+      'value'?: any;
     }
   }
 }

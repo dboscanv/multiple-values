@@ -1,5 +1,6 @@
-import { Component, Element, State, Prop } from '@stencil/core';
+import { Component, Element, State, Prop, Event, EventEmitter, Watch } from '@stencil/core';
 import { Item } from './Item';
+import { compareArrays } from '../../utils/helpers';
 
 // La metadata le agrega propiades/metodos a la clase
 /*
@@ -8,6 +9,7 @@ import { Item } from './Item';
     * Pasar los estilos
     * Terminar de programar :)
     * Emitir evento de agarrar el valor!
+    * Cuando venga valor agregar el valor!
 */
 @Component({
   tag: 'iw-multiple-values',
@@ -16,21 +18,39 @@ export class IwMultipleValues {
 
   @Element() element: HTMLElement;
   @Prop() label: string;
-  @State() data: any[];
-  
+  @State() data: any[] = [];
+  @Prop({ mutable: true }) value: any = [];
+  @Event() valuechange: EventEmitter;
+
   // Array of inputs
   model: Item[] = [];
   modelObj: object;
 
+  @Watch('value')
+  valueDidChangeHandler(newValue: string) {
+    if (!Array.isArray(newValue)) {
+      this.validateValue();
+    }
+  }
+
   componentWillLoad() {
-    // console.log(this.element.getAttribute('value')); // Obtener el valor
-    let inputs = this.element.querySelectorAll("input");
+    let inputs = this.element.querySelectorAll("input, select");
+
     if (inputs.length) {
       Array.from(inputs).forEach(input => {
-        this.model.push(new Item(input.name, input.value, input.placeholder, input.type));
+        let node = input as HTMLInputElement;
+        this.model.push(new Item(node.name, node.value, node.placeholder, node.type));
         this.element.removeChild(input);
       });
-      this.data = [this.makeObject()];
+
+      this.makeObject();
+
+      // Recibir valores
+      if (this.value.length) {
+        this.validateValue();
+      } else {
+        this.data = [...this.data, { ...this.modelObj }];
+      }
     } else {
       console.warn('Inputs elements arent found');
     }
@@ -38,7 +58,9 @@ export class IwMultipleValues {
 
   componentDidUpdate() {
     // When re-render the component, update the value of the element
-    this.element.setAttribute('value', JSON.stringify(this.data));
+    let value = JSON.parse(JSON.stringify(this.data));
+    this.value = value;
+    this.valuechange.emit(value);
   }
 
   makeObject() {
@@ -48,6 +70,25 @@ export class IwMultipleValues {
     }
     this.modelObj = { ...obj };
     return obj;
+  }
+
+  validateValue() {
+    try {
+      let values = JSON.parse(this.value);
+      let keysModel = Object.keys(this.modelObj);
+      values.forEach(element => {
+        if (compareArrays(Object.keys(element), keysModel)) {
+          this.data = [...this.data, element];
+        }
+      });
+
+      if (!this.data.length) {
+        throw "Objects are invalid";
+      }
+
+    } catch (e) {
+      console.error("[IW] Value defined is not valid");
+    }
   }
 
   addItem() {
@@ -95,7 +136,7 @@ export class IwMultipleValues {
                     )}
                     {/* Buttons */}
                     <div class="inputinline inputinlinebtn col-xs-2">
-                      {this.data.length == idx+1 ? <button type="button" ng-if="$last" class="btn btn-xs btn-primary btn-circle" onClick={this.addItem.bind(this)}><i class="fa fa-plus"></i></button> : null}
+                      {this.data.length == idx + 1 ? <button type="button" ng-if="$last" class="btn btn-xs btn-primary btn-circle" onClick={this.addItem.bind(this)}><i class="fa fa-plus"></i></button> : null}
                       {this.data.length !== 1 ? <button type="button" class="btn btn-xs btn-primary btn-circle" onClick={_ => this.removeItem(idx)}><i class="fa fa-minus"></i></button> : null}
                     </div>
                   </div>
