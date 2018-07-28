@@ -7,14 +7,31 @@ import { compareArrays } from '../../utils/helpers';
 })
 export class IwMultipleValues {
 
-  model: Item[] = [];
-  modelObj: object;
+  /**
+   * Array of inputs's 
+   */
+  private model: Item[] = [];
+
+  /**
+   * Guide object
+   */
+  private modelObj: object;
 
   @Element() element: HTMLElement;
 
+  /**
+   * 
+   */
   @State() data: any[] = [];
 
+  /**
+   * The name of the label of inputs
+   */
   @Prop() label: string;
+
+  /**
+   * The value of the component (iw-multiple-values) 
+   */
   @Prop({ mutable: true }) value: any = [];
 
   @Watch('value')
@@ -24,6 +41,9 @@ export class IwMultipleValues {
     }
   }
 
+  /**
+   * Emitted when the value change
+   */
   @Event() valuechange: EventEmitter;
 
   componentWillLoad() {
@@ -49,13 +69,9 @@ export class IwMultipleValues {
     }
   }
 
-  componentDidUpdate() {
-    // When re-render the component, update the value of the element
-    let value = JSON.parse(JSON.stringify(this.data));
-    this.value = value;
-    this.valuechange.emit(value);
-  }
-
+  /**
+   * Make the guide object
+   */
   makeObject() {
     let obj = {};
     for (let item of this.model) {
@@ -65,6 +81,9 @@ export class IwMultipleValues {
     return obj;
   }
 
+  /**
+   * Validate if the value of the component is an array and if has the same keys of the guide object
+   */
   validateValue() {
     try {
       let values = JSON.parse(this.value);
@@ -81,13 +100,22 @@ export class IwMultipleValues {
 
     } catch (e) {
       console.error("[IW] Value defined is not valid");
+      throw e;
     }
   }
 
+  /**
+   * To add item
+   */
   addItem() {
     this.data = [...this.data, { ...this.modelObj }];
   }
 
+
+  /**
+   * To remove item
+   * @param index of array
+   */
   removeItem(index: number) {
     if (this.data.length == 1) {
       this.data = [this.makeObject()];
@@ -96,6 +124,12 @@ export class IwMultipleValues {
     }
   }
 
+/**
+ * Change the value of the component
+ * @param event 
+ * @param index of array
+ * @param property name of property to change
+ */
   changeValue(event, index: number, property: string) {
     let value = event.target.value;
     // this.data[index][property] = value; // Aca no hay reactividad
@@ -105,6 +139,10 @@ export class IwMultipleValues {
       }
       return i;
     });
+
+    // Emit event and change the value of component
+    this.valuechange.emit(this.data);
+    this.value = JSON.parse(JSON.stringify(this.data));
   }
 
   render() {

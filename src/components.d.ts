@@ -30,7 +30,13 @@ declare global {
 
   namespace StencilComponents {
     interface IwMultipleValues {
+      /**
+       * The name of the label of inputs
+       */
       'label': string;
+      /**
+       * The value of the component (iw-multiple-values) 
+       */
       'value': any;
     }
   }
@@ -54,8 +60,17 @@ declare global {
   }
   namespace JSXElements {
     export interface IwMultipleValuesAttributes extends HTMLAttributes {
+      /**
+       * The name of the label of inputs
+       */
       'label'?: string;
+      /**
+       * Emitted when the value change
+       */
       'onValuechange'?: (event: CustomEvent) => void;
+      /**
+       * The value of the component (iw-multiple-values) 
+       */
       'value'?: any;
     }
   }
