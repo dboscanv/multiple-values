@@ -5,6 +5,7 @@
   "module": "dist/esm/index.js",
   "main": "dist/index.js",
   "types": "dist/types/components.d.ts",
+  "unpkg": "dist/intraway-ui.js",
   "collection": "dist/collection/collection-manifest.json",
   "files": [
     "dist/"
