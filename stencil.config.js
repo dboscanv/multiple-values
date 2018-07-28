@@ -1,5 +1,5 @@
 exports.config = {
-  namespace: 'mycomponent',
+  namespace: 'intraway-ui',
   outputTargets:[
     {
       type: 'dist'
