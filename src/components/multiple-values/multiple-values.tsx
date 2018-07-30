@@ -38,7 +38,11 @@ export class IwMultipleValues {
   @Watch('value')
   valueDidChangeHandler() {
     this.data = [];
-    this.validateValue();
+    if(this.value.length) {
+      this.validateValue();
+    } else {
+      this.data = [...this.data, { ...this.modelObj }];
+    }
   }
 
   /**
