@@ -2,6 +2,7 @@ import { Component, Element, State, Prop, Event, EventEmitter, Watch } from '@st
 import { Item } from './Item';
 import { compareArrays } from '../../utils/helpers';
 
+// TODO: Posibilidad de cargar las operaciones asincronas
 @Component({
   tag: 'iw-multiple-values',
 })
@@ -85,22 +86,24 @@ export class IwMultipleValues {
    * Validate if the value of the component is an array and if has the same keys of the guide object
    */
   validateValue() {
+    let values = [];
+
     try {
-      let values = JSON.parse(this.value);
-      let keysModel = Object.keys(this.modelObj);
-      values.forEach(element => {
-        if (compareArrays(Object.keys(element), keysModel)) {
-          this.data = [...this.data, element];
-        }
-      });
+      values = JSON.parse(this.value);
+    } catch (error) {
+      throw "[IW] Value defined is not valid";
+    }
 
-      if (!this.data.length) {
-        throw "Objects are invalid";
+    let keysModel = Object.keys(this.modelObj);
+    values.forEach(element => {
+      console.log(compareArrays(Object.keys(element), keysModel));
+      if (compareArrays(Object.keys(element), keysModel)) {
+        this.data = [...this.data, element];
       }
+    });
 
-    } catch (e) {
-      console.error("[IW] Value defined is not valid");
-      throw e;
+    if (!this.data.length) {
+      throw "[IW] Objects are not have the same keys of the inputs";
     }
   }
 
@@ -124,12 +127,12 @@ export class IwMultipleValues {
     }
   }
 
-/**
- * Change the value of the component
- * @param event 
- * @param index of array
- * @param property name of property to change
- */
+  /**
+   * Change the value of the component
+   * @param event 
+   * @param index of array
+   * @param property name of property to change
+   */
   changeValue(event, index: number, property: string) {
     let value = event.target.value;
     // this.data[index][property] = value; // Aca no hay reactividad
@@ -142,6 +145,7 @@ export class IwMultipleValues {
 
     // Emit event and change the value of component
     this.valuechange.emit(this.data);
+    console.log('Esto es lo que emiteo', this.data);
     this.value = JSON.parse(JSON.stringify(this.data));
   }
 
@@ -164,7 +168,7 @@ export class IwMultipleValues {
                           {i.type == "select-one"
                             ? <select class="form-control input-sm" name="i.name" onInput={(ev) => this.changeValue(ev, idx, i.name)} >
                               {i.options.map(o =>
-                                <option value={o.value}>{o.text}</option>
+                                <option value={o.value} selected={o.value == e[i.name]}>{o.text}</option>
                               )}
                             </select>
                             : <input class="form-control input-sm" name={i.name} value={e[i.name]} type={i.type} placeholder={i.placeholder} onInput={(ev) => this.changeValue(ev, idx, i.name)} />}

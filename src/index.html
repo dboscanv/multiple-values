@@ -5,22 +5,25 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
   <title>Stencil Component Starter</title>
-  <link rel="stylesheet" href="/build/mycomponent.css">
-  <script src="/build/mycomponent.js"></script>
+  <link rel="stylesheet" href="/build/intraway-ui.css">
+  <script src="/build/intraway-ui.js"></script>
 </head>
 
 <body>
 
-  <iw-multiple-values label="Related Parties">
-    <input type="text" name="first_name" placeholder="First name" />
-    <input type="text" name="last_name" placeholder="Last name" />
-    <select name="rol">
-      <option value="">Select Role</option>
-      <option value="employee">EMPLOYEE</option>
-      <option value="owner">OWNER</option>
-      <option value="unemployed">UNEMPLOYED</option>
+  <iw-multiple-values label="Related Parties" value='[{"id":"640eccae-d9ce-4608-ad83-7cf4aa5287da","source":"SYM","name":"ss","role":"vendor","validFor":{"startDateTime":"2018-07-30T15:21:07.000+0000","endDateTime":null}}]'>
+   <select name="id">
+     <option value="640eccae-d9ce-4608-ad83-7cf4aa5287da">Party 1</option>
+     <option value="640eccae-d9ce-4608-ad83-7cf4aa5287db">Party 2</option>
+   </select>
+    <select name="role">
+        <option value="">Select Role</option>
+        <option value="employee">Employee</option>
+        <option value="vendor">Vendor</option>
+        <option value="technitian">Technitian</option>
+        <option value="supplier">Supplier</option>
     </select>
-    <input type="text" name="nickname" placeholder="nickname">
+    <input type="text" name="name" placeholder="Name">
   </iw-multiple-values>
 </body>
 
