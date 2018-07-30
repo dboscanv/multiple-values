@@ -98,13 +98,23 @@ export class IwMultipleValues {
     values.forEach(element => {
       console.log(compareArrays(Object.keys(element), keysModel));
       if (compareArrays(Object.keys(element), keysModel)) {
-        this.data = [...this.data, element];
+        let clean_element = this.cleanValue(element, keysModel);
+        this.data = [...this.data, clean_element];
       }
     });
 
     if (!this.data.length) {
       throw "[IW] Objects are not have the same keys of the inputs";
     }
+  }
+
+  cleanValue(obj, keysGuide) {
+    for(let key in obj) {
+      if(keysGuide.indexOf(key) == -1) {
+        delete obj[key];
+      }
+    }
+    return obj;
   }
 
   /**

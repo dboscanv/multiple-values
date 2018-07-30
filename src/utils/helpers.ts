@@ -20,5 +20,15 @@ export function compareArrays(array1, array2) {
         }   
     }
 
+
+    /**
+     * Before return true
+     */
+    for(let prop of array1) {
+        if(array2.indexOf(prop) == -1) {
+            delete array1[prop];
+        }   
+    }
+
     return true;
 }
