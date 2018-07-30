@@ -31,6 +31,11 @@ export class IwMultipleValues {
   @Prop() label: string;
 
   /**
+   * If true, the inputs can edit
+   */
+  @Prop() canEdit: boolean = true;
+
+  /**
    * The value of the component (iw-multiple-values) 
    */
   @Prop({ mutable: true }) value: Array<any> = [];
@@ -170,20 +175,21 @@ export class IwMultipleValues {
                       <div>
                         <div class="inputinline col-xs-2">
                           {i.type == "select-one"
-                            ? <select class="form-control input-sm" name="i.name" onInput={(ev) => this.changeValue(ev, idx, i.name)} >
+                            ? <select disabled={!this.canEdit} class="form-control input-sm" name="i.name" onInput={(ev) => this.changeValue(ev, idx, i.name)} >
                               {i.options.map(o =>
                                 <option value={o.value} selected={o.value == e[i.name]}>{o.text}</option>
                               )}
                             </select>
-                            : <input class="form-control input-sm" name={i.name} value={e[i.name]} type={i.type} placeholder={i.placeholder} onInput={(ev) => this.changeValue(ev, idx, i.name)} />}
+                            : <input class="form-control input-sm" disabled={!this.canEdit} name={i.name} value={e[i.name]} type={i.type} placeholder={i.placeholder} onInput={(ev) => this.changeValue(ev, idx, i.name)} />}
                         </div>
                       </div>
                     )}
                     {/* Buttons */}
+                    {this.canEdit ? 
                     <div class="inputinline inputinlinebtn col-xs-2">
-                      {this.data.length == idx + 1 ? <button type="button" ng-if="$last" class="btn btn-xs btn-primary btn-circle" onClick={this.addItem.bind(this)}><i class="fa fa-plus"></i></button> : null}
+                      {this.data.length == idx + 1 ? <button type="button" class="btn btn-xs btn-primary btn-circle" onClick={this.addItem.bind(this)}><i class="fa fa-plus"></i></button> : null}
                       {this.data.length !== 1 ? <button type="button" class="btn btn-xs btn-primary btn-circle" onClick={_ => this.removeItem(idx)}><i class="fa fa-minus"></i></button> : null}
-                    </div>
+                    </div> : null}
                   </div>
                 </fieldset>
               )}

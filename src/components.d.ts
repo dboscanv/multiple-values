@@ -31,6 +31,10 @@ declare global {
   namespace StencilComponents {
     interface IwMultipleValues {
       /**
+       * If true, the inputs can edit
+       */
+      'canEdit': boolean;
+      /**
        * The name of the label of inputs
        */
       'label': string;
@@ -60,6 +64,10 @@ declare global {
   }
   namespace JSXElements {
     export interface IwMultipleValuesAttributes extends HTMLAttributes {
+      /**
+       * If true, the inputs can edit
+       */
+      'canEdit'?: boolean;
       /**
        * The name of the label of inputs
        */
