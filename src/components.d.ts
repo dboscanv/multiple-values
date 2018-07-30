@@ -37,7 +37,7 @@ declare global {
       /**
        * The value of the component (iw-multiple-values) 
        */
-      'value': any;
+      'value': Array<any>;
     }
   }
 
@@ -71,7 +71,7 @@ declare global {
       /**
        * The value of the component (iw-multiple-values) 
        */
-      'value'?: any;
+      'value'?: Array<any>;
     }
   }
 }

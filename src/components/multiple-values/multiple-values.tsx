@@ -33,13 +33,12 @@ export class IwMultipleValues {
   /**
    * The value of the component (iw-multiple-values) 
    */
-  @Prop({ mutable: true }) value: any = [];
+  @Prop({ mutable: true }) value: Array<any> = [];
 
   @Watch('value')
-  valueDidChangeHandler(newValue: string) {
-    if (!Array.isArray(newValue)) {
-      this.validateValue();
-    }
+  valueDidChangeHandler() {
+    this.data = [];
+    this.validateValue();
   }
 
   /**
@@ -86,22 +85,14 @@ export class IwMultipleValues {
    * Validate if the value of the component is an array and if has the same keys of the guide object
    */
   validateValue() {
-    let values = [];
-
-    try {
-      values = JSON.parse(this.value);
-    } catch (error) {
-      throw "[IW] Value defined is not valid";
-    }
-
     let keysModel = Object.keys(this.modelObj);
-    values.forEach(element => {
-      console.log(compareArrays(Object.keys(element), keysModel));
-      if (compareArrays(Object.keys(element), keysModel)) {
-        let clean_element = this.cleanValue(element, keysModel);
-        this.data = [...this.data, clean_element];
-      }
-    });
+
+      this.value.forEach(element => {
+        if (compareArrays(Object.keys(element), keysModel)) {
+          let clean_element = this.cleanValue(element, keysModel);
+          this.data = [...this.data, clean_element];
+        }
+      });
 
     if (!this.data.length) {
       throw "[IW] Objects are not have the same keys of the inputs";
@@ -155,8 +146,7 @@ export class IwMultipleValues {
 
     // Emit event and change the value of component
     this.valuechange.emit(this.data);
-    console.log('Esto es lo que emiteo', this.data);
-    this.value = JSON.parse(JSON.stringify(this.data));
+    this.value = this.data;
   }
 
   render() {
