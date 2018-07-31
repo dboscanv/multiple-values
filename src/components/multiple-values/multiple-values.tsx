@@ -59,7 +59,6 @@ export class IwMultipleValues {
     let inputs = this.element.querySelectorAll("input, select");
     if (inputs.length) {
       Array.from(inputs).forEach(input => {
-        console.log(input.querySelectorAll('option'));
         let node = input as HTMLInputElement;
         this.model.push(new Item(node.name, node.value, node.placeholder, node.type, Array.from(input.querySelectorAll('option'))));
         this.element.removeChild(input);
