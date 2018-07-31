@@ -43,7 +43,7 @@ export class IwMultipleValues {
   @Watch('value')
   valueDidChangeHandler() {
     this.data = [];
-    if(this.value.length) {
+    if (this.value.length) {
       this.validateValue();
     } else {
       this.data = [...this.data, { ...this.modelObj }];
@@ -96,12 +96,12 @@ export class IwMultipleValues {
   validateValue() {
     let keysModel = Object.keys(this.modelObj);
 
-      this.value.forEach(element => {
-        if (compareArrays(Object.keys(element), keysModel)) {
-          let clean_element = this.cleanValue(element, keysModel);
-          this.data = [...this.data, clean_element];
-        }
-      });
+    this.value.forEach(element => {
+      if (compareArrays(Object.keys(element), keysModel)) {
+        let clean_element = this.cleanValue(element, keysModel);
+        this.data = [...this.data, clean_element];
+      }
+    });
 
     if (!this.data.length) {
       throw "[IW] Objects are not have the same keys of the inputs";
@@ -109,8 +109,8 @@ export class IwMultipleValues {
   }
 
   cleanValue(obj, keysGuide) {
-    for(let key in obj) {
-      if(keysGuide.indexOf(key) == -1) {
+    for (let key in obj) {
+      if (keysGuide.indexOf(key) == -1) {
         delete obj[key];
       }
     }
@@ -165,42 +165,38 @@ export class IwMultipleValues {
   render() {
     let pl = { 'padding-left': '0px' };
     return (
-      <div class="container">
-        <form class="form-horizontal col-xs-11">
-          <div class="form-group">
-            <label class="control-label col-sm-2">{this.label}</label>{/*  <!-- for inputname --> */}
-            <div class="col-xs-10" style={pl}>
-              {/* Repeat the fieldset */}
-              {this.data.map((e, idx) =>
-                <fieldset class="mb10">
-                  <div class="form-horizontal">
-                    {/* Inputs */}
-                    {this.model.map((i) =>
-                      <div>
-                        <div class="inputinline col-xs-2">
-                          {i.type == "select-one"
-                            ? <select disabled={!this.canEdit} class="form-control input-sm" name="i.name" onInput={(ev) => this.changeValue(ev, idx, i.name)} >
-                              {i.options.map(o =>
-                                <option value={o.value} selected={o.value == e[i.name]}>{o.text}</option>
-                              )}
-                            </select>
-                            : <input class="form-control input-sm" disabled={!this.canEdit} name={i.name} value={e[i.name]} type={i.type} placeholder={i.placeholder} onInput={(ev) => this.changeValue(ev, idx, i.name)} />}
-                        </div>
-                      </div>
-                    )}
-                    {/* Buttons */}
-                    {this.canEdit ? 
-                    <div class="inputinline inputinlinebtn col-xs-2">
-                      {this.data.length == idx + 1 ? <button type="button" class="btn btn-xs btn-primary btn-circle" onClick={this.addItem.bind(this)}><i class="fa fa-plus"></i></button> : null}
-                      {this.data.length !== 1 ? <button type="button" class="btn btn-xs btn-primary btn-circle" onClick={_ => this.removeItem(idx)}><i class="fa fa-minus"></i></button> : null}
-                    </div> : null}
+      <div class="form-group">
+        <label class="control-label col-sm-2">{this.label}</label>{/*  <!-- for inputname --> */}
+        <div class="col-xs-10" style={pl}>
+          {/* Repeat the fieldset */}
+          {this.data.map((e, idx) =>
+            <fieldset class="mb10">
+              <div class="form-horizontal">
+                {/* Inputs */}
+                {this.model.map((i) =>
+                  <div>
+                    <div class="inputinline col-xs-2">
+                      {i.type == "select-one"
+                        ? <select disabled={!this.canEdit} class="form-control input-sm" name="i.name" onInput={(ev) => this.changeValue(ev, idx, i.name)} >
+                          {i.options.map(o =>
+                            <option value={o.value} selected={o.value == e[i.name]}>{o.text}</option>
+                          )}
+                        </select>
+                        : <input class="form-control input-sm" disabled={!this.canEdit} name={i.name} value={e[i.name]} type={i.type} placeholder={i.placeholder} onInput={(ev) => this.changeValue(ev, idx, i.name)} />}
+                    </div>
                   </div>
-                </fieldset>
-              )}
-              {/* Fin repeat fieldset */}
-            </div>
-          </div>
-        </form>
+                )}
+                {/* Buttons */}
+                {this.canEdit ?
+                  <div class="inputinline inputinlinebtn col-xs-2">
+                    {this.data.length == idx + 1 ? <button type="button" class="btn btn-xs btn-primary btn-circle" onClick={this.addItem.bind(this)}><i class="fa fa-plus"></i></button> : null}
+                    {this.data.length !== 1 ? <button type="button" class="btn btn-xs btn-primary btn-circle" onClick={_ => this.removeItem(idx)}><i class="fa fa-minus"></i></button> : null}
+                  </div> : null}
+              </div>
+            </fieldset>
+          )}
+          {/* Fin repeat fieldset */}
+        </div>
       </div>
     );
   }
