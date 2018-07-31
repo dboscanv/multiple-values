@@ -135,6 +135,10 @@ export class IwMultipleValues {
     } else {
       this.data = this.data.filter((_, idx) => idx !== index);
     }
+
+    // Emit event and change the value of component
+    this.valuechange.emit(this.data);
+    this.value = this.data;
   }
 
   /**
