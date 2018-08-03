@@ -1,11 +1,11 @@
-# iw-multiple-values
+# multiple-values
 
 # How to use
 
-Simply use the tag `iw-multiple-values` and inside put the inputs that you want, for example:
+Simply use the tag `multiple-values` and inside put the inputs that you want, for example:
 
 ```
-         <iw-multiple-values label="{{'Characteristics Rel.' | translate}}">
+         <multiple-values label="{{'Characteristics Rel.' | translate}}">
                         <select name="id">
                             <option value=""></option>
                             <option value="{{item.id}}" ng-repeat="item in vm.servicedata.serviceSpecCharacteristics">{{item.name}}</option>
@@ -14,7 +14,7 @@ Simply use the tag `iw-multiple-values` and inside put the inputs that you want,
                             <option value=""></option>
                             <option value="dependency">{{'dependency' | translate}}</option>
                         </select>
-        </iw-multiple-values>
+        </multiple-values>
 ```
 
 ## Properties
