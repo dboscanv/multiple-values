@@ -1,11 +1,11 @@
 {
-  "name": "intraway-ui",
+  "name": "multiple-values",
   "version": "0.0.10",
-  "description": "Intraway UI",
+  "description": "Multiple value inputs",
   "module": "dist/esm/index.js",
   "main": "dist/index.js",
   "types": "dist/types/components.d.ts",
-  "unpkg": "dist/intraway-ui.js",
+  "unpkg": "dist/multiple-values.js",
   "collection": "dist/collection/collection-manifest.json",
   "files": [
     "dist/"
@@ -16,12 +16,8 @@
     "test": "jest",
     "test.watch": "jest --watch"
   },
-  "dependencies": {
-    "bootstrap": "^3.3.7",
-    "jquery": "^3.3.1"
-  },
   "devDependencies": {
-    "@stencil/core": "^0.10.0",
+    "@stencil/core": "^0.11.0",
     "@types/jest": "^21.1.1",
     "jest": "^21.2.1"
   },
@@ -29,12 +25,8 @@
     "type": "git",
     "url": "git+https://github.com/ionic-team/stencil-component-starter.git"
   },
-  "author": "Ionic Team",
+  "author": "Diego Boscan",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/ionic-team/stencil"
-  },
-  "homepage": "https://github.com/ionic-team/stencil",
   "jest": {
     "transform": {
       "^.+\\.(ts|tsx)$": "<rootDir>/node_modules/@stencil/core/testing/jest.preprocessor.js"

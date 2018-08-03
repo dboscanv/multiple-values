@@ -29,55 +29,103 @@ declare global {
 declare global {
 
   namespace StencilComponents {
-    interface IwMultipleValues {
+    interface MultipleValues {
+      /**
+       * Button's class
+       */
+      'buttonClass': string;
       /**
        * If true, the inputs can edit
        */
       'canEdit': boolean;
       /**
+       * Class of button's container
+       */
+      'containerButtonsClass': string;
+      /**
+       * Class of container of all inputs
+       */
+      'containerClass': string;
+      /**
+       * Class of input's container
+       */
+      'containerInputClass': string;
+      /**
        * The name of the label of inputs
        */
       'label': string;
       /**
-       * The value of the component (iw-multiple-values) 
+       * The class of the label
+       */
+      'labelClass': string;
+      /**
+       * Class of row (one row = one element of the data object = one group of inputs)
+       */
+      'rowClass': string;
+      /**
+       * The value of the component (multiple-values) 
        */
       'value': Array<any>;
     }
   }
 
-  interface HTMLIwMultipleValuesElement extends StencilComponents.IwMultipleValues, HTMLStencilElement {}
+  interface HTMLMultipleValuesElement extends StencilComponents.MultipleValues, HTMLStencilElement {}
 
-  var HTMLIwMultipleValuesElement: {
-    prototype: HTMLIwMultipleValuesElement;
-    new (): HTMLIwMultipleValuesElement;
+  var HTMLMultipleValuesElement: {
+    prototype: HTMLMultipleValuesElement;
+    new (): HTMLMultipleValuesElement;
   };
   interface HTMLElementTagNameMap {
-    'iw-multiple-values': HTMLIwMultipleValuesElement;
+    'multiple-values': HTMLMultipleValuesElement;
   }
   interface ElementTagNameMap {
-    'iw-multiple-values': HTMLIwMultipleValuesElement;
+    'multiple-values': HTMLMultipleValuesElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      'iw-multiple-values': JSXElements.IwMultipleValuesAttributes;
+      'multiple-values': JSXElements.MultipleValuesAttributes;
     }
   }
   namespace JSXElements {
-    export interface IwMultipleValuesAttributes extends HTMLAttributes {
+    export interface MultipleValuesAttributes extends HTMLAttributes {
+      /**
+       * Button's class
+       */
+      'buttonClass'?: string;
       /**
        * If true, the inputs can edit
        */
       'canEdit'?: boolean;
       /**
+       * Class of button's container
+       */
+      'containerButtonsClass'?: string;
+      /**
+       * Class of container of all inputs
+       */
+      'containerClass'?: string;
+      /**
+       * Class of input's container
+       */
+      'containerInputClass'?: string;
+      /**
        * The name of the label of inputs
        */
       'label'?: string;
+      /**
+       * The class of the label
+       */
+      'labelClass'?: string;
       /**
        * Emitted when the value change
        */
       'onValuechange'?: (event: CustomEvent) => void;
       /**
-       * The value of the component (iw-multiple-values) 
+       * Class of row (one row = one element of the data object = one group of inputs)
+       */
+      'rowClass'?: string;
+      /**
+       * The value of the component (multiple-values) 
        */
       'value'?: Array<any>;
     }

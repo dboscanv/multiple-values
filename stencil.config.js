@@ -1,5 +1,5 @@
 exports.config = {
-  namespace: 'intraway-ui',
+  namespace: 'multiple-values',
   outputTargets:[
     {
       type: 'dist'

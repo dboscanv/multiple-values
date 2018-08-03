@@ -5,27 +5,31 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
   <title>Stencil Component Starter</title>
-  <link rel="stylesheet" href="/build/intraway-ui.css">
-  <script src="/build/intraway-ui.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B"
+    crossorigin="anonymous">
+  <link href="https://unpkg.com/ionicons@4.3.0/dist/css/ionicons.min.css" rel="stylesheet">
+  <script src="/build/multiple-values.js"></script>
 </head>
 
 <body>
+  <div class="container">
+    <form>
+      <multiple-values label="Students">
 
-  <!--  -->
-  <iw-multiple-values label="Related Parties">
-   <select name="id">
-     <option value="640eccae-d9ce-4608-ad83-7cf4aa5287da">Party 1</option>
-     <option value="640eccae-d9ce-4608-ad83-7cf4aa5287db">Party 2</option>
-   </select>
-    <select name="role">
-        <option value="">Select Role</option>
-        <option value="employee">Employee</option>
-        <option value="vendor">Vendor</option>
-        <option value="technitian">Technitian</option>
-        <option value="supplier">Supplier</option>
-    </select>
-    <input type="text" name="name" placeholder="Name">
-  </iw-multiple-values>
+        <select name="gender" class="form-control">
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+        <input type="text" name="first_name" placeholder="First Name" class="form-control">
+        <input type="text" name="last_name" placeholder="Last Name" class="form-control">
+        
+        <!-- Slots -->
+        <i slot="btn-plus" class="icon ion-md-add"></i>
+        <i slot="btn-minus" class="icon ion-md-remove"></i>
+      </multiple-values>
+    </form>
+  </div>
+
 </body>
 
 </html>
