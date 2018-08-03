@@ -14,7 +14,7 @@ Simply use the tag `iw-multiple-values` and inside put the inputs that you want,
                             <option value=""></option>
                             <option value="dependency">{{'dependency' | translate}}</option>
                         </select>
-                    </iw-multiple-values>
+        </iw-multiple-values>
 ```
 
 ## Properties
