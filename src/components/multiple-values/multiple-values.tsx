@@ -1,5 +1,5 @@
 import { Component, Element, State, Prop, Event, EventEmitter, Watch } from '@stencil/core';
-import { Item } from './Item';
+import { Input } from './Input';
 import { compareArrays } from '../../utils/helpers';
 
 @Component({
@@ -10,7 +10,7 @@ export class MultipleValues {
   /**
    * Array of inputs (with name, classname, placeholder, type)
    */
-  private model: Item[] = [];
+  private model: Input[] = [];
 
   /**
    * Guide object
@@ -89,7 +89,8 @@ export class MultipleValues {
     if (inputs.length) {
       Array.from(inputs).forEach(input => {
         let node = input as HTMLInputElement;
-        this.model.push(new Item(node.name, node.value, node.placeholder, node.type, node.className, Array.from(input.querySelectorAll('option'))));
+        let inputObj = { name: node.name, value: node.value, placeholder: node.placeholder, type: node.type, className: node.className, options: Array.from(input.querySelectorAll('option')) };
+        this.model.push(inputObj);
         this.element.removeChild(input);
       });
 
