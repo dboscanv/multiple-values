@@ -1,5 +1,5 @@
 import { Component, Element, State, Prop, Event, EventEmitter, Watch } from '@stencil/core';
-import { Input } from './Input';
+import { Input } from './input-interface';
 import { compareArrays } from '../../utils/helpers';
 
 @Component({
